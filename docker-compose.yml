@@ -1,0 +1,40 @@
+version: '3'
+
+networks:
+  laravel:
+    driver: bridge
+
+services:
+  app:
+    container_name: app
+    build: 
+      context: .
+      dockerfile: ./docker/app.dockerfile
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel
+  
+  nginx:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx.dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - .:/var/www/html
+    networks:
+      - laravel
+
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - laravel
+    
