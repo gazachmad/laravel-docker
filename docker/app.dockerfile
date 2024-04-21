@@ -25,4 +25,4 @@ RUN crontab /etc/cron.d/crontab
 
 WORKDIR /var/www/html
 
-CMD ["sh", "-c", "php -r \"file_exists('.env') || copy('.env.example', '.env');\"; composer install; php artisan key:generate; php artisan migrate; supervisord -c /etc/supervisor/conf.d/supervisord.conf"]
+CMD ["sh", "-c", "composer install; php artisan migrate; supervisord -c /etc/supervisor/conf.d/supervisord.conf"]
